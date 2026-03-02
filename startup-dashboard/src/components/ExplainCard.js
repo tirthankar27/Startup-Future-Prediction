@@ -6,15 +6,35 @@ export default function ExplainCard({ data }) {
     .sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]))
     .slice(0, 5);
 
-  return (
-    <div className="card" style={{ marginTop: "30px" }}>
-      <h2>Key Risk Drivers</h2>
+  const maxAbs = Math.max(...sorted.map(([_, v]) => Math.abs(v)));
 
-      {sorted.map(([feature, value]) => (
-        <div key={feature} style={{ marginTop: "10px" }}>
-          {feature}: {value.toFixed(4)}
-        </div>
-      ))}
+  return (
+    <div>
+      <h2 style={{ marginBottom: 20 }}>Key Risk Drivers</h2>
+
+      {sorted.map(([feature, value]) => {
+        const width = (Math.abs(value) / maxAbs) * 100;
+        const color = value > 0 ? "#ef4444" : "#10b981";
+
+        return (
+          <div key={feature} style={{ marginBottom: 15 }}>
+            <div style={{ fontSize: 14 }}>{feature}</div>
+
+            <div style={{
+              background: "#1e293b",
+              borderRadius: 8,
+              overflow: "hidden",
+              height: 12
+            }}>
+              <div style={{
+                width: `${width}%`,
+                background: color,
+                height: "100%"
+              }} />
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

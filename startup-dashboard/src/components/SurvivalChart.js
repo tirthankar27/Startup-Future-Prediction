@@ -5,35 +5,33 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  CartesianGrid,
-  ResponsiveContainer
+  ResponsiveContainer,
+  CartesianGrid
 } from "recharts";
 
 export default function SurvivalChart({ data }) {
 
-  const chartData = [
-    { year: "1 Year", survival: data["1_year_survival"] },
-    { year: "3 Years", survival: data["3_year_survival"] },
-    { year: "5 Years", survival: data["5_year_survival"] }
-  ];
+  const curveData = data.curve.map(point => ({
+    time: point.time,
+    survival: point.survival * 100
+  }));
 
   return (
-    <div className="card" style={{ height: "400px" }}>
-      <h2 style={{ marginBottom: "20px" }}>
-        Survival Probability
-      </h2>
+    <div style={{ height: 350 }}>
+      <h2 style={{ marginBottom: 20 }}>Survival Curve</h2>
 
-      <ResponsiveContainer width="100%" height="85%">
-        <LineChart data={chartData}>
-          <CartesianGrid stroke="#334155" />
-          <XAxis dataKey="year" stroke="white" />
-          <YAxis domain={[0, 1]} stroke="white" />
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart data={curveData}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+          <XAxis dataKey="time" stroke="#cbd5e1" />
+          <YAxis domain={[0,100]} stroke="#cbd5e1" />
           <Tooltip />
           <Line
             type="monotone"
             dataKey="survival"
             stroke="#3b82f6"
             strokeWidth={3}
+            dot={false}
           />
         </LineChart>
       </ResponsiveContainer>

@@ -4,12 +4,12 @@ import {
   RadialBar,
   ResponsiveContainer
 } from "recharts";
+import "./riskcard.css";
 
 export default function RiskCard({ data }) {
 
   const { failure_probability, risk_level } = data;
-
-  const percentage = (failure_probability * 100);
+  const percentage = failure_probability * 100;
 
   const riskColor =
     risk_level === "High"
@@ -27,46 +27,42 @@ export default function RiskCard({ data }) {
   ];
 
   return (
-    <div className="card" style={{ width: "350px", textAlign: "center" }}>
-      <h2 style={{ marginBottom: "20px" }}>
-        Risk Assessment
-      </h2>
+    <div className="risk-card">
 
-      <div style={{ width: "100%", height: 250 }}>
+      <h2 className="risk-title">Risk Assessment</h2>
+
+      <div className="risk-chart-wrapper">
         <ResponsiveContainer>
           <RadialBarChart
-            innerRadius="70%"
+            innerRadius="75%"
             outerRadius="100%"
             data={chartData}
             startAngle={180}
             endAngle={0}
           >
             <RadialBar
-              minAngle={15}
               background
               clockWise
               dataKey="value"
+              cornerRadius={20}
             />
           </RadialBarChart>
         </ResponsiveContainer>
+
+        <div
+          className="risk-center-value"
+          style={{ color: riskColor }}
+        >
+          {percentage.toFixed(1)}%
+        </div>
       </div>
 
-      <h1 style={{
-        fontSize: "36px",
-        marginTop: "-40px",
-        color: riskColor
-      }}>
-        {percentage.toFixed(2)}%
-      </h1>
-
-      <div style={{
-        marginTop: "10px",
-        fontSize: "16px",
-        fontWeight: "bold",
-        color: riskColor
-      }}>
+      <div
+        className={`risk-level ${risk_level.toLowerCase()}`}
+      >
         {risk_level} Risk
       </div>
+
     </div>
   );
 }

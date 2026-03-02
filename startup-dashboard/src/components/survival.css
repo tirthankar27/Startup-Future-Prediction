@@ -1,0 +1,20 @@
+.survival-card {
+  padding: 30px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  transition: 0.3s ease;
+}
+
+.survival-card:hover {
+  transform: translateY(-5px);
+}
+
+.survival-title {
+  margin-bottom: 25px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #e2e8f0;
+}
